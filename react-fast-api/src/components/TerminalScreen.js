@@ -4,25 +4,9 @@ import axios from "axios";
 
 export default function TerminalScreen({ writeCommand, writeResult }) {
   const [theme, setTheme] = useState("portfolio");
+  //const [errFlag, setErrFlag] = useState(false);
 
   const themes = {
-    matrix: {
-      themeBGColor: "#0D0208",
-      themeToolbarColor: "#0D0208",
-      themeColor: "#00FF41",
-      themePromptColor: "#008F11",
-      errorColor: "#008F11",
-      successColor: "#008F11",
-      linkColor: "#00FF41",
-    },
-    ocean: {
-      themeBGColor: "#224fbc",
-      themeToolbarColor: "#216dff",
-      themeColor: "#e5e5e5",
-      themePromptColor: "#00e5e5",
-      errorColor: "#e5e500",
-      linkColor: "#e5e5e5",
-    },
     portfolio: {
       themeBGColor: "#fdf6e4",
       themeToolbarColor: "#d8d8d8",
@@ -49,12 +33,16 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
   );
 
   const fetchData = async (url) => {
-    const res = await fetch(url);
-    const data = await res.json();
-    return JSON.stringify(data);
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      //setErrFlag(false);
+      return [false, JSON.stringify(data)];
+    } catch (err) {
+      //setErrFlag(true);
+      return [true, JSON.stringify(err)];
+    }
   };
-
-  const commands = () => {};
 
   return (
     <div
@@ -75,15 +63,20 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
         }}
       >
         <ReactTerminal
-          commands={commands}
           prompt="$"
           welcomeMessage={welcomeMessage}
           errorMessage={<span style={error}>Command not found</span>}
           themes={themes}
           theme={theme}
           defaultHandler={async (command, commandArguments) => {
-            writeCommand(command);
-            writeResult(await fetchData(command));
+            let [errFlag, result] = await fetchData(command);
+            if (errFlag) {
+              writeCommand("Error");
+            } else {
+              writeCommand(command);
+            }
+            writeResult(result);
+
             return "";
           }}
         />
