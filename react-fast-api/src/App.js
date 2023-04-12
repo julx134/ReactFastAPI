@@ -92,7 +92,7 @@ export default function App() {
   return (
     <Row>
       <Modal
-        title="Please copy the command to the terminal"
+        title="Please copy and enter the command to the terminal"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -568,7 +568,7 @@ export default function App() {
                           }, 1000);
                         }}
                       >
-                        <Button>Copy</Button>
+                        <Button onClick={handleOk}>Copy</Button>
                       </CopyToClipboard>
                       {isCopied ? (
                         <p
@@ -592,17 +592,45 @@ export default function App() {
             )}
           </>
         ) : (
-          <div style={{ width: "100%", backgroundColor: "#000000" }}>
-            <p
-              style={{
-                color: "#FFFFFF",
-                marginLeft: "1%",
-                fontFamily: "Roboto Mono",
-              }}
-            >
-              {commandDetails}
-            </p>
-          </div>
+          <>
+            <div style={{ width: "100%", backgroundColor: "#000000" }}>
+              <p
+                style={{
+                  color: "#FFFFFF",
+                  marginLeft: "1%",
+                  fontFamily: "Roboto Mono",
+                }}
+              >
+                {commandDetails}
+              </p>
+            </div>
+            <div style={{ display: "inline" }}>
+              <CopyToClipboard
+                text={commandDetails}
+                onCopy={() => {
+                  setIsCopied(true);
+                  setTimeout(() => {
+                    setIsCopied(false);
+                  }, 1000);
+                }}
+              >
+                <Button onClick={handleOk}>Copy</Button>
+              </CopyToClipboard>
+              {isCopied ? (
+                <p
+                  style={{
+                    display: "inline",
+                    paddingLeft: "2%",
+                    color: "#FF0000",
+                  }}
+                >
+                  Text copied!
+                </p>
+              ) : (
+                ""
+              )}
+            </div>
+          </>
         )}
       </Modal>
       <Col
