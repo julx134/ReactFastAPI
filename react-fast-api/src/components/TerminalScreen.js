@@ -111,7 +111,8 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
 
             if (errFlag) {
               writeCommand("Error");
-              writeResult("{error: incorrect or invalid command}");
+              let errObject = { error: "incorrect or invalid command" };
+              writeResult(JSON.stringify(errObject));
             } else {
               writeCommand(endpoint);
               writeResult(result);

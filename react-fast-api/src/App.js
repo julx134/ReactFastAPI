@@ -71,6 +71,16 @@ export default function App() {
     );
   };
 
+  const onFormFinishPostRover = (values) => {
+    const myRegex = /^[MLRD]+$/g;
+
+    if (myRegex.test(values.commands)) {
+      setCommandDetails(`${commandFormDetails}?commands=${values.commands}`);
+    } else {
+      setCommandDetails("Invalid command string");
+    }
+  };
+
   return (
     <Row>
       <Modal
@@ -268,6 +278,41 @@ export default function App() {
                 </div>
               </>
             )}
+            {formType == 6 && (
+              <>
+                <Form onFinish={onFormFinishPostRover} layout="inline">
+                  <Form.Item
+                    label="Rover Commands"
+                    name="commands"
+                    style={{ marginBottom: "2%" }}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input the rover commands!",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item style={{ marginTop: "2%" }}>
+                    <Button type="primary" htmlType="submit">
+                      Generate Command
+                    </Button>
+                  </Form.Item>
+                </Form>
+                <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                  <p
+                    style={{
+                      color: "#FFFFFF",
+                      marginLeft: "1%",
+                      fontFamily: "Roboto Mono",
+                    }}
+                  >
+                    {commandDetails}
+                  </p>
+                </div>
+              </>
+            )}
           </>
         ) : (
           <div style={{ width: "100%", backgroundColor: "#000000" }}>
@@ -389,9 +434,9 @@ export default function App() {
             </Button>
             <Button
               style={{
-                backgroundColor: "#0BDA51",
+                backgroundColor: "#2E8B57",
                 color: "#FFFFFF",
-                borderColor: "#0BDA51",
+                borderColor: "#2E8B57",
               }}
               onClick={() => {
                 setCommandDetails("");
@@ -404,14 +449,27 @@ export default function App() {
               Create Mine
             </Button>
             <Button
+              style={{
+                backgroundColor: "#2E8B57",
+                color: "#FFFFFF",
+                borderColor: "#2E8B57",
+              }}
               onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails("post " + baseURL + "/rovers");
+                setFormType(6);
+                setFormRequired(true);
                 showModal();
-                setCommandDetails(baseURL + "/map");
               }}
             >
-              Get Map
+              Create Rover
             </Button>
             <Button
+              style={{
+                backgroundColor: "#2E8B57",
+                color: "#FFFFFF",
+                borderColor: "#2E8B57",
+              }}
               onClick={() => {
                 showModal();
                 setCommandDetails(baseURL + "/map");
@@ -481,7 +539,9 @@ export default function App() {
               alignItems: "center",
             }}
           >
-            <pre>{JSON.stringify(JSON.parse(result), null, 2)}</pre>
+            <pre>
+              {JSON.stringify(JSON.parse(result ? result : "{}"), null, 2)}
+            </pre>
           </Card>
         </Row>
       </Col>
