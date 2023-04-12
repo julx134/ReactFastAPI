@@ -34,6 +34,10 @@ export default function App() {
     setCommandDetails(`${commandFormDetails}/${values.id}`);
   };
 
+  const onFormFinishDispatch = (values) => {
+    setCommandDetails(`${commandFormDetails}/${values.id}/dispatch`);
+  };
+
   const onFormFinishPutMine = (values) => {
     const obj = {
       serial_no: values.serial_no ? values.serial_no : "",
@@ -322,6 +326,40 @@ export default function App() {
                 </div>
               </>
             )}
+            {formType == 7 && (
+              <>
+                <Form onFinish={onFormFinishDispatch} layout="inline">
+                  <Form.Item
+                    label="ID"
+                    name="id"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input the rover commands!",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                      Generate Command
+                    </Button>
+                  </Form.Item>
+                </Form>
+                <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                  <p
+                    style={{
+                      color: "#FFFFFF",
+                      marginLeft: "1%",
+                      fontFamily: "Roboto Mono",
+                    }}
+                  >
+                    {commandDetails}
+                  </p>
+                </div>
+              </>
+            )}
           </>
         ) : (
           <div style={{ width: "100%", backgroundColor: "#000000" }}>
@@ -480,11 +518,14 @@ export default function App() {
                 borderColor: "#2E8B57",
               }}
               onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails("post " + baseURL + "/rovers");
+                setFormType(7);
+                setFormRequired(true);
                 showModal();
-                setCommandDetails(baseURL + "/map");
               }}
             >
-              Get Map
+              Dispatch Rover
             </Button>
             <Button
               type="primary"
