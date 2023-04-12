@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import TerminalScreen from "./components/TerminalScreen";
 import { Col, Row, Card, Button, Modal, Space, Form, Input } from "antd";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 export default function App() {
   const [command, setCommand] = useState("");
@@ -10,13 +11,16 @@ export default function App() {
   const [formType, setFormType] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formRequired, setFormRequired] = useState(false);
-  const baseURL = "http://127.0.0.1:8000";
+  const [isCopied, setIsCopied] = useState(false);
+  const baseURL = "https://coe892lab42022g500874689.azurewebsites.net";
 
   const showModal = () => {
     setIsModalOpen(true);
   };
   const handleOk = () => {
-    setIsModalOpen(false);
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 500);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -92,11 +96,13 @@ export default function App() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={[
-          <Button key="submit" type="primary" onClick={handleOk}>
-            Ok
-          </Button>,
-        ]}
+        footer={
+          [
+            // <Button key="submit" type="primary" onClick={handleOk}>
+            //   Ok
+            // </Button>,
+          ]
+        }
       >
         {formRequired ? (
           <>
@@ -121,17 +127,49 @@ export default function App() {
                     </Button>
                   </Form.Item>
                 </Form>
-                <div style={{ width: "100%", backgroundColor: "#000000" }}>
-                  <p
-                    style={{
-                      color: "#FFFFFF",
-                      marginLeft: "1%",
-                      fontFamily: "Roboto Mono",
-                    }}
-                  >
-                    {commandDetails}
-                  </p>
-                </div>
+                {commandDetails ? (
+                  <>
+                    <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                      <p
+                        style={{
+                          color: "#FFFFFF",
+                          marginLeft: "1%",
+                          fontFamily: "Roboto Mono",
+                        }}
+                      >
+                        {commandDetails}
+                      </p>
+                    </div>
+                    <div style={{ display: "inline" }}>
+                      <CopyToClipboard
+                        text={commandDetails}
+                        onCopy={() => {
+                          setIsCopied(true);
+                          setTimeout(() => {
+                            setIsCopied(false);
+                          }, 1000);
+                        }}
+                      >
+                        <Button onClick={handleOk}>Copy</Button>
+                      </CopyToClipboard>
+                      {isCopied ? (
+                        <p
+                          style={{
+                            display: "inline",
+                            paddingLeft: "2%",
+                            color: "#FF0000",
+                          }}
+                        >
+                          Text copied!
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
             )}
             {formType == 2 && (
@@ -149,17 +187,49 @@ export default function App() {
                     </Button>
                   </Form.Item>
                 </Form>
-                <div style={{ width: "100%", backgroundColor: "#000000" }}>
-                  <p
-                    style={{
-                      color: "#FFFFFF",
-                      marginLeft: "1%",
-                      fontFamily: "Roboto Mono",
-                    }}
-                  >
-                    {commandDetails}
-                  </p>
-                </div>
+                {commandDetails ? (
+                  <>
+                    <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                      <p
+                        style={{
+                          color: "#FFFFFF",
+                          marginLeft: "1%",
+                          fontFamily: "Roboto Mono",
+                        }}
+                      >
+                        {commandDetails}
+                      </p>
+                    </div>
+                    <div style={{ display: "inline" }}>
+                      <CopyToClipboard
+                        text={commandDetails}
+                        onCopy={() => {
+                          setIsCopied(true);
+                          setTimeout(() => {
+                            setIsCopied(false);
+                          }, 1000);
+                        }}
+                      >
+                        <Button onClick={handleOk}>Copy</Button>
+                      </CopyToClipboard>
+                      {isCopied ? (
+                        <p
+                          style={{
+                            display: "inline",
+                            paddingLeft: "2%",
+                            color: "#FF0000",
+                          }}
+                        >
+                          Text copied!
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
             )}
             {formType == 3 && (
@@ -194,17 +264,49 @@ export default function App() {
                     </Button>
                   </Form.Item>
                 </Form>
-                <div style={{ width: "100%", backgroundColor: "#000000" }}>
-                  <p
-                    style={{
-                      color: "#FFFFFF",
-                      marginLeft: "1%",
-                      fontFamily: "Roboto Mono",
-                    }}
-                  >
-                    {commandDetails}
-                  </p>
-                </div>
+                {commandDetails ? (
+                  <>
+                    <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                      <p
+                        style={{
+                          color: "#FFFFFF",
+                          marginLeft: "1%",
+                          fontFamily: "Roboto Mono",
+                        }}
+                      >
+                        {commandDetails}
+                      </p>
+                    </div>
+                    <div style={{ display: "inline" }}>
+                      <CopyToClipboard
+                        text={commandDetails}
+                        onCopy={() => {
+                          setIsCopied(true);
+                          setTimeout(() => {
+                            setIsCopied(false);
+                          }, 1000);
+                        }}
+                      >
+                        <Button onClick={handleOk}>Copy</Button>
+                      </CopyToClipboard>
+                      {isCopied ? (
+                        <p
+                          style={{
+                            display: "inline",
+                            paddingLeft: "2%",
+                            color: "#FF0000",
+                          }}
+                        >
+                          Text copied!
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
             )}
             {formType == 4 && (
@@ -243,17 +345,49 @@ export default function App() {
                     </Button>
                   </Form.Item>
                 </Form>
-                <div style={{ width: "100%", backgroundColor: "#000000" }}>
-                  <p
-                    style={{
-                      color: "#FFFFFF",
-                      marginLeft: "1%",
-                      fontFamily: "Roboto Mono",
-                    }}
-                  >
-                    {commandDetails}
-                  </p>
-                </div>
+                {commandDetails ? (
+                  <>
+                    <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                      <p
+                        style={{
+                          color: "#FFFFFF",
+                          marginLeft: "1%",
+                          fontFamily: "Roboto Mono",
+                        }}
+                      >
+                        {commandDetails}
+                      </p>
+                    </div>
+                    <div style={{ display: "inline" }}>
+                      <CopyToClipboard
+                        text={commandDetails}
+                        onCopy={() => {
+                          setIsCopied(true);
+                          setTimeout(() => {
+                            setIsCopied(false);
+                          }, 1000);
+                        }}
+                      >
+                        <Button onClick={handleOk}>Copy</Button>
+                      </CopyToClipboard>
+                      {isCopied ? (
+                        <p
+                          style={{
+                            display: "inline",
+                            paddingLeft: "2%",
+                            color: "#FF0000",
+                          }}
+                        >
+                          Text copied!
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
             )}
             {formType == 5 && (
@@ -278,17 +412,49 @@ export default function App() {
                     </Button>
                   </Form.Item>
                 </Form>
-                <div style={{ width: "100%", backgroundColor: "#000000" }}>
-                  <p
-                    style={{
-                      color: "#FFFFFF",
-                      marginLeft: "1%",
-                      fontFamily: "Roboto Mono",
-                    }}
-                  >
-                    {commandDetails}
-                  </p>
-                </div>
+                {commandDetails ? (
+                  <>
+                    <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                      <p
+                        style={{
+                          color: "#FFFFFF",
+                          marginLeft: "1%",
+                          fontFamily: "Roboto Mono",
+                        }}
+                      >
+                        {commandDetails}
+                      </p>
+                    </div>
+                    <div style={{ display: "inline" }}>
+                      <CopyToClipboard
+                        text={commandDetails}
+                        onCopy={() => {
+                          setIsCopied(true);
+                          setTimeout(() => {
+                            setIsCopied(false);
+                          }, 1000);
+                        }}
+                      >
+                        <Button onClick={handleOk}>Copy</Button>
+                      </CopyToClipboard>
+                      {isCopied ? (
+                        <p
+                          style={{
+                            display: "inline",
+                            paddingLeft: "2%",
+                            color: "#FF0000",
+                          }}
+                        >
+                          Text copied!
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
             )}
             {formType == 6 && (
@@ -313,17 +479,49 @@ export default function App() {
                     </Button>
                   </Form.Item>
                 </Form>
-                <div style={{ width: "100%", backgroundColor: "#000000" }}>
-                  <p
-                    style={{
-                      color: "#FFFFFF",
-                      marginLeft: "1%",
-                      fontFamily: "Roboto Mono",
-                    }}
-                  >
-                    {commandDetails}
-                  </p>
-                </div>
+                {commandDetails ? (
+                  <>
+                    <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                      <p
+                        style={{
+                          color: "#FFFFFF",
+                          marginLeft: "1%",
+                          fontFamily: "Roboto Mono",
+                        }}
+                      >
+                        {commandDetails}
+                      </p>
+                    </div>
+                    <div style={{ display: "inline" }}>
+                      <CopyToClipboard
+                        text={commandDetails}
+                        onCopy={() => {
+                          setIsCopied(true);
+                          setTimeout(() => {
+                            setIsCopied(false);
+                          }, 1000);
+                        }}
+                      >
+                        <Button onClick={handleOk}>Copy</Button>
+                      </CopyToClipboard>
+                      {isCopied ? (
+                        <p
+                          style={{
+                            display: "inline",
+                            paddingLeft: "2%",
+                            color: "#FF0000",
+                          }}
+                        >
+                          Text copied!
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
             )}
             {formType == 7 && (
@@ -347,17 +545,49 @@ export default function App() {
                     </Button>
                   </Form.Item>
                 </Form>
-                <div style={{ width: "100%", backgroundColor: "#000000" }}>
-                  <p
-                    style={{
-                      color: "#FFFFFF",
-                      marginLeft: "1%",
-                      fontFamily: "Roboto Mono",
-                    }}
-                  >
-                    {commandDetails}
-                  </p>
-                </div>
+                {commandDetails ? (
+                  <>
+                    <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                      <p
+                        style={{
+                          color: "#FFFFFF",
+                          marginLeft: "1%",
+                          fontFamily: "Roboto Mono",
+                        }}
+                      >
+                        {commandDetails}
+                      </p>
+                    </div>
+                    <div style={{ display: "inline" }}>
+                      <CopyToClipboard
+                        text={commandDetails}
+                        onCopy={() => {
+                          setIsCopied(true);
+                          setTimeout(() => {
+                            setIsCopied(false);
+                          }, 1000);
+                        }}
+                      >
+                        <Button>Copy</Button>
+                      </CopyToClipboard>
+                      {isCopied ? (
+                        <p
+                          style={{
+                            display: "inline",
+                            paddingLeft: "2%",
+                            color: "#FF0000",
+                          }}
+                        >
+                          Text copied!
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
               </>
             )}
           </>
