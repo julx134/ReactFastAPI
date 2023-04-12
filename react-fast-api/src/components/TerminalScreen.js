@@ -31,12 +31,30 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
     </span>
   );
 
-  const fetchData = async (type, url) => {
+  const fetchData = async (type, url, ...body) => {
     try {
       switch (type) {
         case "get":
-          const res = await fetch(url);
-          const data = await res.json();
+          var res = await fetch(url);
+          var data = await res.json();
+          return [false, JSON.stringify(data)];
+        case "put":
+          if (!body[0]) {
+            var res = await fetch(url, {
+              method: "PUT",
+            });
+            var data = await res.json();
+            return [false, JSON.stringify(data)];
+          }
+
+          var res = await fetch(url, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: body[0],
+          });
+          var data = await res.json();
           return [false, JSON.stringify(data)];
         default:
           return [true, JSON.stringify({ error: "Invalid request" })];
@@ -72,13 +90,20 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
           theme={theme}
           defaultHandler={async (command, commandArguments) => {
             let endpoint = commandArguments.split(" ")[0];
-            let [errFlag, result] = await fetchData(command, endpoint);
+            let body = "";
+            try {
+              body = commandArguments.split(" ")[1];
+            } catch (err) {
+              console.log(err);
+            }
+
+            let [errFlag, result] = await fetchData(command, endpoint, body);
 
             if (errFlag) {
               writeCommand("Error");
               writeResult("{error: incorrect or invalid command}");
             } else {
-              writeCommand(commandArguments);
+              writeCommand(endpoint);
               writeResult(result);
             }
 

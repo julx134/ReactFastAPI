@@ -34,7 +34,22 @@ export default function App() {
     setCommandDetails(`${commandFormDetails}/${values.id}`);
   };
 
-  const onFormFinishMap = (values) => {};
+  const onFormFinishPutMine = (values) => {};
+
+  const onFormFinishMap = (values) => {
+    const obj = {
+      row: values.row ? values.row : "",
+      col: values.col ? values.col : "",
+      map: ["string"],
+    };
+    setCommandDetails(
+      // `${commandFormDetails} {"row":"${values.row ? values.row : ""}","col":"${
+      //   values.col ? values.col : ""
+      // }","map":["string"]}`
+
+      `${commandFormDetails} ${JSON.stringify(obj)}`
+    );
+  };
 
   return (
     <Row>
@@ -104,6 +119,46 @@ export default function App() {
                 </div>
               </>
             )}
+            {formType == 3 && (
+              <>
+                <Form onFinish={onFormFinishPutMine} layout="inline">
+                  <Form.Item
+                    label="ID"
+                    name="id"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input the ID!",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item label="Row" name="row">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item label="Col" name="col">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item style={{ marginTop: "2%" }}>
+                    <Button type="primary" htmlType="submit">
+                      Generate Command
+                    </Button>
+                  </Form.Item>
+                </Form>
+                <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                  <p
+                    style={{
+                      color: "#FFFFFF",
+                      marginLeft: "1%",
+                      fontFamily: "Roboto Mono",
+                    }}
+                  >
+                    {commandDetails}
+                  </p>
+                </div>
+              </>
+            )}
           </>
         ) : (
           <div style={{ width: "100%", backgroundColor: "#000000" }}>
@@ -130,8 +185,9 @@ export default function App() {
             <Button
               type="primary"
               onClick={() => {
+                setFormRequired(false);
                 showModal();
-                setCommandDetails(baseURL + "/map");
+                setCommandDetails("get " + baseURL + "/map");
               }}
             >
               Get Map
@@ -139,7 +195,7 @@ export default function App() {
             <Button
               type="primary"
               onClick={() => {
-                setCommandDetails(baseURL + "/mines");
+                setCommandDetails("get " + baseURL + "/mines");
                 setFormRequired(false);
                 showModal();
               }}
@@ -149,7 +205,7 @@ export default function App() {
             <Button
               type="primary"
               onClick={() => {
-                setCommandDetails(baseURL + "/rovers");
+                setCommandDetails("get " + baseURL + "/rovers");
                 setFormRequired(false);
                 showModal();
               }}
@@ -160,7 +216,7 @@ export default function App() {
               type="primary"
               onClick={() => {
                 setCommandDetails("");
-                setCommandFormDetails(baseURL + "/mines");
+                setCommandFormDetails("get " + baseURL + "/mines");
                 setFormType(1);
                 setFormRequired(true);
                 showModal();
@@ -172,7 +228,7 @@ export default function App() {
               type="primary"
               onClick={() => {
                 setCommandDetails("");
-                setCommandFormDetails(baseURL + "/rovers");
+                setCommandFormDetails("get " + baseURL + "/rovers");
                 setFormType(1);
                 setFormRequired(true);
                 showModal();
@@ -183,7 +239,7 @@ export default function App() {
             <Button
               onClick={() => {
                 setCommandDetails("");
-                setCommandFormDetails(baseURL + "/map");
+                setCommandFormDetails("put " + baseURL + "/map");
                 setFormType(2);
                 setFormRequired(true);
                 showModal();
@@ -193,19 +249,23 @@ export default function App() {
             </Button>
             <Button
               onClick={() => {
+                setFormRequired(false);
                 showModal();
-                setCommandDetails(baseURL + "/map");
+                setCommandDetails("put " + baseURL + "/reset_map");
               }}
             >
-              Get Map
+              Reset Map
             </Button>
             <Button
               onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails("put " + baseURL + "/mines");
+                setFormType(3);
+                setFormRequired(true);
                 showModal();
-                setCommandDetails(baseURL + "/map");
               }}
             >
-              Get Map
+              Update Mine
             </Button>
             <Button
               onClick={() => {
