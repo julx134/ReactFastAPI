@@ -66,6 +66,12 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
           });
           var data = await res.json();
           return [false, JSON.stringify(data)];
+        case "del":
+          var res = await fetch(url, {
+            method: "DELETE",
+          });
+          var data = await res.json();
+          return [false, JSON.stringify(data)];
         default:
           return [true, JSON.stringify({ error: "Invalid request" })];
       }

@@ -99,7 +99,16 @@ export default function App() {
             {formType == 1 && (
               <>
                 <Form onFinish={onFormFinishID} layout="inline">
-                  <Form.Item label="ID" name="id">
+                  <Form.Item
+                    label="ID"
+                    name="id"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input the rover commands!",
+                      },
+                    ]}
+                  >
                     <Input />
                   </Form.Item>
                   <Form.Item>
@@ -482,7 +491,7 @@ export default function App() {
               danger
               onClick={() => {
                 setCommandDetails("");
-                setCommandFormDetails(baseURL + "/mines");
+                setCommandFormDetails("del " + baseURL + "/mines");
                 setFormType(1);
                 setFormRequired(true);
                 showModal();
@@ -495,7 +504,7 @@ export default function App() {
               danger
               onClick={() => {
                 setCommandDetails("");
-                setCommandFormDetails(baseURL + "/rovers");
+                setCommandFormDetails("del " + baseURL + "/rovers");
                 setFormType(1);
                 setFormRequired(true);
                 showModal();
