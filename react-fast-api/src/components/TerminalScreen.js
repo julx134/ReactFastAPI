@@ -1,6 +1,5 @@
 import { ReactTerminal } from "react-terminal";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 export default function TerminalScreen({ writeCommand, writeResult }) {
   const [theme, setTheme] = useState("portfolio");
@@ -32,14 +31,17 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
     </span>
   );
 
-  const fetchData = async (url) => {
+  const fetchData = async (type, url) => {
     try {
-      const res = await fetch(url);
-      const data = await res.json();
-      //setErrFlag(false);
-      return [false, JSON.stringify(data)];
+      switch (type) {
+        case "get":
+          const res = await fetch(url);
+          const data = await res.json();
+          return [false, JSON.stringify(data)];
+        default:
+          return [true, JSON.stringify({ error: "Invalid request" })];
+      }
     } catch (err) {
-      //setErrFlag(true);
       return [true, JSON.stringify(err)];
     }
   };
@@ -49,13 +51,13 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
         height: "100vh",
         backgroundColor: "#F1A031",
       }}
     >
       <div
         style={{
+          marginTop: "20%",
           height: 433,
           maxHeight: "100vh",
           width: 600,
@@ -69,13 +71,16 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
           themes={themes}
           theme={theme}
           defaultHandler={async (command, commandArguments) => {
-            let [errFlag, result] = await fetchData(command);
+            let endpoint = commandArguments.split(" ")[0];
+            let [errFlag, result] = await fetchData(command, endpoint);
+
             if (errFlag) {
               writeCommand("Error");
+              writeResult("{error: incorrect or invalid command}");
             } else {
-              writeCommand(command);
+              writeCommand(commandArguments);
+              writeResult(result);
             }
-            writeResult(result);
 
             return "";
           }}

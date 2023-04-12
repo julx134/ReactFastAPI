@@ -1,12 +1,15 @@
 import React, { useState, useRef } from "react";
 import TerminalScreen from "./components/TerminalScreen";
-import { Col, Row, Card, Button, Modal } from "antd";
+import { Col, Row, Card, Button, Modal, Space, Form, Input } from "antd";
 
 export default function App() {
   const [command, setCommand] = useState("");
   const [result, setResult] = useState("");
   const [commandDetails, setCommandDetails] = useState("");
+  const [commandFormDetails, setCommandFormDetails] = useState("");
+  const [formType, setFormType] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formRequired, setFormRequired] = useState(false);
   const baseURL = "http://127.0.0.1:8000";
 
   const showModal = () => {
@@ -27,10 +30,16 @@ export default function App() {
     setResult(data);
   };
 
+  const onFormFinishID = (values) => {
+    setCommandDetails(`${commandFormDetails}/${values.id}`);
+  };
+
+  const onFormFinishMap = (values) => {};
+
   return (
     <Row>
       <Modal
-        title="Basic Modal"
+        title="Please copy the command to the terminal"
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -40,7 +49,75 @@ export default function App() {
           </Button>,
         ]}
       >
-        {commandDetails}
+        {formRequired ? (
+          <>
+            {formType == 1 && (
+              <>
+                <Form onFinish={onFormFinishID} layout="inline">
+                  <Form.Item label="ID" name="id">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                      Generate Command
+                    </Button>
+                  </Form.Item>
+                </Form>
+                <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                  <p
+                    style={{
+                      color: "#FFFFFF",
+                      marginLeft: "1%",
+                      fontFamily: "Roboto Mono",
+                    }}
+                  >
+                    {commandDetails}
+                  </p>
+                </div>
+              </>
+            )}
+            {formType == 2 && (
+              <>
+                <Form onFinish={onFormFinishMap} layout="inline">
+                  <Form.Item label="Row" name="row">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item label="Col" name="col">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item style={{ marginTop: "2%" }}>
+                    <Button type="primary" htmlType="submit">
+                      Generate Command
+                    </Button>
+                  </Form.Item>
+                </Form>
+                <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                  <p
+                    style={{
+                      color: "#FFFFFF",
+                      marginLeft: "1%",
+                      fontFamily: "Roboto Mono",
+                    }}
+                  >
+                    {commandDetails}
+                  </p>
+                </div>
+              </>
+            )}
+          </>
+        ) : (
+          <div style={{ width: "100%", backgroundColor: "#000000" }}>
+            <p
+              style={{
+                color: "#FFFFFF",
+                marginLeft: "1%",
+                fontFamily: "Roboto Mono",
+              }}
+            >
+              {commandDetails}
+            </p>
+          </div>
+        )}
       </Modal>
       <Col
         span={12}
@@ -49,14 +126,146 @@ export default function App() {
         }}
       >
         <Row>
-          <Button
-            onClick={() => {
-              showModal();
-              setCommandDetails(baseURL + "/map");
-            }}
-          >
-            Get Map
-          </Button>
+          <Space wrap style={{ marginTop: "5%", marginLeft: "5%" }}>
+            <Button
+              type="primary"
+              onClick={() => {
+                showModal();
+                setCommandDetails(baseURL + "/map");
+              }}
+            >
+              Get Map
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                setCommandDetails(baseURL + "/mines");
+                setFormRequired(false);
+                showModal();
+              }}
+            >
+              Get Mines
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                setCommandDetails(baseURL + "/rovers");
+                setFormRequired(false);
+                showModal();
+              }}
+            >
+              Get Rovers
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails(baseURL + "/mines");
+                setFormType(1);
+                setFormRequired(true);
+                showModal();
+              }}
+            >
+              Get Mine By Id
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails(baseURL + "/rovers");
+                setFormType(1);
+                setFormRequired(true);
+                showModal();
+              }}
+            >
+              Get Rover By Id
+            </Button>
+            <Button
+              onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails(baseURL + "/map");
+                setFormType(2);
+                setFormRequired(true);
+                showModal();
+              }}
+            >
+              Update Map
+            </Button>
+            <Button
+              onClick={() => {
+                showModal();
+                setCommandDetails(baseURL + "/map");
+              }}
+            >
+              Get Map
+            </Button>
+            <Button
+              onClick={() => {
+                showModal();
+                setCommandDetails(baseURL + "/map");
+              }}
+            >
+              Get Map
+            </Button>
+            <Button
+              onClick={() => {
+                showModal();
+                setCommandDetails(baseURL + "/map");
+              }}
+            >
+              Get Map
+            </Button>
+            <Button
+              onClick={() => {
+                showModal();
+                setCommandDetails(baseURL + "/map");
+              }}
+            >
+              Get Map
+            </Button>
+            <Button
+              onClick={() => {
+                showModal();
+                setCommandDetails(baseURL + "/map");
+              }}
+            >
+              Get Map
+            </Button>
+            <Button
+              onClick={() => {
+                showModal();
+                setCommandDetails(baseURL + "/map");
+              }}
+            >
+              Get Map
+            </Button>
+            <Button
+              type="primary"
+              danger
+              onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails(baseURL + "/mines");
+                setFormType(1);
+                setFormRequired(true);
+                showModal();
+              }}
+            >
+              Delete Mine by ID
+            </Button>
+            <Button
+              type="primary"
+              danger
+              onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails(baseURL + "/rovers");
+                setFormType(1);
+                setFormRequired(true);
+                showModal();
+              }}
+            >
+              Delete Rover by ID
+            </Button>
+          </Space>
         </Row>
         <Row
           style={{
