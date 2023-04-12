@@ -25,7 +25,7 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
   const welcomeMessage = (
     <span>
       Welcome to my <strong>FastAPI</strong> project! Use the buttons above to
-      start.
+      start. Type <strong>clear</strong> to clear the command line!
       <br />
       <br />
     </span>
@@ -76,7 +76,7 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
       <div
         style={{
           marginTop: "20%",
-          height: 433,
+          height: 500,
           maxHeight: "100vh",
           width: 600,
           maxWidth: "100vw",

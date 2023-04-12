@@ -34,7 +34,17 @@ export default function App() {
     setCommandDetails(`${commandFormDetails}/${values.id}`);
   };
 
-  const onFormFinishPutMine = (values) => {};
+  const onFormFinishPutMine = (values) => {
+    const obj = {
+      serial_no: values.serial_no ? values.serial_no : "",
+      x: values.x ? values.x : "",
+      y: values.y ? values.x : "",
+    };
+
+    setCommandDetails(
+      `${commandFormDetails}/${values.id} ${JSON.stringify(obj)}`
+    );
+  };
 
   const onFormFinishMap = (values) => {
     const obj = {
@@ -42,12 +52,12 @@ export default function App() {
       col: values.col ? values.col : "",
       map: ["string"],
     };
-    setCommandDetails(
-      // `${commandFormDetails} {"row":"${values.row ? values.row : ""}","col":"${
-      //   values.col ? values.col : ""
-      // }","map":["string"]}`
+    setCommandDetails(`${commandFormDetails} ${JSON.stringify(obj)}`);
+  };
 
-      `${commandFormDetails} ${JSON.stringify(obj)}`
+  const onFormFinishPutRover = (values) => {
+    setCommandDetails(
+      `${commandFormDetails}/${values.id}?commands=${values.commands}`
     );
   };
 
@@ -121,10 +131,11 @@ export default function App() {
             )}
             {formType == 3 && (
               <>
-                <Form onFinish={onFormFinishPutMine} layout="inline">
+                <Form onFinish={onFormFinishPutMine}>
                   <Form.Item
                     label="ID"
                     name="id"
+                    style={{ marginBottom: "2%" }}
                     rules={[
                       {
                         required: true,
@@ -134,12 +145,65 @@ export default function App() {
                   >
                     <Input />
                   </Form.Item>
-                  <Form.Item label="Row" name="row">
+
+                  <Form.Item label="x" name="x">
                     <Input />
                   </Form.Item>
-                  <Form.Item label="Col" name="col">
+                  <Form.Item label="y" name="y">
                     <Input />
                   </Form.Item>
+                  <Form.Item label="Serial Number" name="serial_no">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item style={{ marginTop: "2%" }}>
+                    <Button type="primary" htmlType="submit">
+                      Generate Command
+                    </Button>
+                  </Form.Item>
+                </Form>
+                <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                  <p
+                    style={{
+                      color: "#FFFFFF",
+                      marginLeft: "1%",
+                      fontFamily: "Roboto Mono",
+                    }}
+                  >
+                    {commandDetails}
+                  </p>
+                </div>
+              </>
+            )}
+            {formType == 4 && (
+              <>
+                <Form onFinish={onFormFinishPutRover}>
+                  <Form.Item
+                    label="ID"
+                    name="id"
+                    style={{ marginBottom: "2%" }}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input the ID!",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    label="Commands"
+                    name="commands"
+                    style={{ marginBottom: "2%" }}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input the commands!",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+
                   <Form.Item style={{ marginTop: "2%" }}>
                     <Button type="primary" htmlType="submit">
                       Generate Command
@@ -181,7 +245,7 @@ export default function App() {
         }}
       >
         <Row>
-          <Space wrap style={{ marginTop: "5%", marginLeft: "5%" }}>
+          <Space wrap style={{ margin: "5%" }}>
             <Button
               type="primary"
               onClick={() => {
@@ -269,11 +333,14 @@ export default function App() {
             </Button>
             <Button
               onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails("put " + baseURL + "/rovers");
+                setFormType(4);
+                setFormRequired(true);
                 showModal();
-                setCommandDetails(baseURL + "/map");
               }}
             >
-              Get Map
+              Update Rover
             </Button>
             <Button
               onClick={() => {
