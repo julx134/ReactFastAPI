@@ -46,6 +46,16 @@ export default function App() {
     );
   };
 
+  const onFormFinishPostMine = (values) => {
+    const obj = {
+      serial_no: values.serial_no ? values.serial_no : "",
+      x: values.x ? values.x : "",
+      y: values.y ? values.x : "",
+    };
+
+    setCommandDetails(`${commandFormDetails} ${JSON.stringify(obj)}`);
+  };
+
   const onFormFinishMap = (values) => {
     const obj = {
       row: values.row ? values.row : "",
@@ -223,6 +233,41 @@ export default function App() {
                 </div>
               </>
             )}
+            {formType == 5 && (
+              <>
+                <Form onFinish={onFormFinishPostMine} layout="inline">
+                  <Form.Item label="x" name="x">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item label="y" name="y">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    style={{ marginTop: "2%" }}
+                    label="Serial Number"
+                    name="serial_no"
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item style={{ marginTop: "2%" }}>
+                    <Button type="primary" htmlType="submit">
+                      Generate Command
+                    </Button>
+                  </Form.Item>
+                </Form>
+                <div style={{ width: "100%", backgroundColor: "#000000" }}>
+                  <p
+                    style={{
+                      color: "#FFFFFF",
+                      marginLeft: "1%",
+                      fontFamily: "Roboto Mono",
+                    }}
+                  >
+                    {commandDetails}
+                  </p>
+                </div>
+              </>
+            )}
           </>
         ) : (
           <div style={{ width: "100%", backgroundColor: "#000000" }}>
@@ -343,12 +388,20 @@ export default function App() {
               Update Rover
             </Button>
             <Button
+              style={{
+                backgroundColor: "#0BDA51",
+                color: "#FFFFFF",
+                borderColor: "#0BDA51",
+              }}
               onClick={() => {
+                setCommandDetails("");
+                setCommandFormDetails("post " + baseURL + "/mines");
+                setFormType(5);
+                setFormRequired(true);
                 showModal();
-                setCommandDetails(baseURL + "/map");
               }}
             >
-              Get Map
+              Create Mine
             </Button>
             <Button
               onClick={() => {
@@ -418,21 +471,18 @@ export default function App() {
         >
           <Card
             title={command ? command : baseURL}
-            size="small"
+            size="medium"
             style={{
               width: "100vw",
-              height: "40vh",
+              height: "100%",
               margin: "5%",
               borderWidth: "2px",
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <p>{result}</p>
+            <pre>{JSON.stringify(JSON.parse(result), null, 2)}</pre>
           </Card>
-        </Row>
-        <Row>
-          <h1>test</h1>
         </Row>
       </Col>
     </Row>

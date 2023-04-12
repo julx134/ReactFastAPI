@@ -56,6 +56,16 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
           });
           var data = await res.json();
           return [false, JSON.stringify(data)];
+        case "post":
+          var res = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: body[0],
+          });
+          var data = await res.json();
+          return [false, JSON.stringify(data)];
         default:
           return [true, JSON.stringify({ error: "Invalid request" })];
       }
