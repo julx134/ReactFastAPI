@@ -12,7 +12,7 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formRequired, setFormRequired] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-  const baseURL = "https://coe892lab42022g500874689.azurewebsites.net";
+  const baseURL = "https://roverfastapi.azurewebsites.net";
 
   const showModal = () => {
     setIsModalOpen(true);
