@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import TerminalScreen from "./components/TerminalScreen";
 import { Col, Row, Card, Button, Modal, Space, Form, Input } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import FormPopup from "./components/FormPopup";
 
 export default function App() {
   const [command, setCommand] = useState("");
@@ -108,7 +109,7 @@ export default function App() {
           <>
             {formType == 1 && (
               <>
-                <Form onFinish={onFormFinishID} layout="inline">
+                {/* <Form onFinish={onFormFinishID} layout="inline">
                   <Form.Item
                     label="ID"
                     name="id"
@@ -126,7 +127,9 @@ export default function App() {
                       Generate Command
                     </Button>
                   </Form.Item>
-                </Form>
+                </Form> */}
+
+                <FormPopup onFormFinish={onFormFinishID}></FormPopup>
                 {commandDetails ? (
                   <>
                     <div style={{ width: "100%", backgroundColor: "#000000" }}>
