@@ -316,6 +316,7 @@ export default function App() {
                         <p
                           style={{
                             display: "inline",
+                            //dawd
                             paddingLeft: "2%",
                             color: "#FF0000",
                           }}
