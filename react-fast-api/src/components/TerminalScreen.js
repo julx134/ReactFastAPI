@@ -95,10 +95,7 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
           marginRight: "5%",
           marginLeft: "5%",
           marginBottom: "20%",
-          //height: 500,
-          //maxHeight: "100vh",
-          //width: 600,
-          //maxWidth: "100vw",
+          maxHeight: 500,
         }}
       >
         <ReactTerminal

@@ -11,6 +11,7 @@ import {
   FormPopup6,
   FormPopup7,
 } from "./components/FormPopup";
+import "./App.css";
 
 export default function App() {
   const [command, setCommand] = useState("");
@@ -503,7 +504,7 @@ export default function App() {
         }}
       >
         <Row>
-          <Space wrap style={{ margin: "5%" }}>
+          <Space wrap style={{ margin: "5%", width: "100%" }}>
             <Button
               type="primary"
               onClick={() => {
@@ -698,22 +699,23 @@ export default function App() {
             alignItems: "center",
           }}
         >
-          <Card
-            title={command ? command : baseURL}
-            size="medium"
-            style={{
-              width: "100vw",
-              height: "100%",
-              margin: "5%",
-              borderWidth: "2px",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <pre>
-              {JSON.stringify(JSON.parse(result ? result : "{}"), null, 2)}
-            </pre>
-          </Card>
+          <div style={{ width: "100%" }}>
+            <Card
+              title={command ? command : baseURL}
+              size="medium"
+              style={{
+                height: "100%",
+                margin: "5%",
+                borderWidth: "2px",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <pre>
+                {JSON.stringify(JSON.parse(result ? result : "{}"), null, 2)}
+              </pre>
+            </Card>
+          </div>
         </Row>
       </Col>
     </Row>
