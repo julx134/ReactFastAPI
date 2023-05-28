@@ -2,7 +2,15 @@ import React, { useState, useRef } from "react";
 import TerminalScreen from "./components/TerminalScreen";
 import { Col, Row, Card, Button, Modal, Space, Form, Input } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { FormPopup1, FormPopup2, FormPopup3 } from "./components/FormPopup";
+import {
+  FormPopup1,
+  FormPopup2,
+  FormPopup3,
+  FormPopup4,
+  FormPopup5,
+  FormPopup6,
+  FormPopup7,
+} from "./components/FormPopup";
 
 export default function App() {
   const [command, setCommand] = useState("");
@@ -253,40 +261,7 @@ export default function App() {
             )}
             {formType == 4 && (
               <>
-                <Form onFinish={onFormFinishPutRover}>
-                  <Form.Item
-                    label="ID"
-                    name="id"
-                    style={{ marginBottom: "2%" }}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input the ID!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                  <Form.Item
-                    label="Commands"
-                    name="commands"
-                    style={{ marginBottom: "2%" }}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input the commands!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-
-                  <Form.Item style={{ marginTop: "2%" }}>
-                    <Button type="primary" htmlType="submit">
-                      Generate Command
-                    </Button>
-                  </Form.Item>
-                </Form>
+                <FormPopup4 onFormFinish={onFormFinishPutMine}></FormPopup4>
                 {commandDetails ? (
                   <>
                     <div style={{ width: "100%", backgroundColor: "#000000" }}>
@@ -316,7 +291,6 @@ export default function App() {
                         <p
                           style={{
                             display: "inline",
-                            //dawd
                             paddingLeft: "2%",
                             color: "#FF0000",
                           }}
@@ -335,26 +309,7 @@ export default function App() {
             )}
             {formType == 5 && (
               <>
-                <Form onFinish={onFormFinishPostMine} layout="inline">
-                  <Form.Item label="x" name="x">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item label="y" name="y">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item
-                    style={{ marginTop: "2%" }}
-                    label="Serial Number"
-                    name="serial_no"
-                  >
-                    <Input />
-                  </Form.Item>
-                  <Form.Item style={{ marginTop: "2%" }}>
-                    <Button type="primary" htmlType="submit">
-                      Generate Command
-                    </Button>
-                  </Form.Item>
-                </Form>
+                <FormPopup5 onFormFinish={onFormFinishPostMine}></FormPopup5>
                 {commandDetails ? (
                   <>
                     <div style={{ width: "100%", backgroundColor: "#000000" }}>
@@ -402,26 +357,8 @@ export default function App() {
             )}
             {formType == 6 && (
               <>
-                <Form onFinish={onFormFinishPostRover} layout="inline">
-                  <Form.Item
-                    label="Rover Commands"
-                    name="commands"
-                    style={{ marginBottom: "2%" }}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input the rover commands!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                  <Form.Item style={{ marginTop: "2%" }}>
-                    <Button type="primary" htmlType="submit">
-                      Generate Command
-                    </Button>
-                  </Form.Item>
-                </Form>
+                <FormPopup6 onFormFinish={onFormFinishPostRover}></FormPopup6>
+
                 {commandDetails ? (
                   <>
                     <div style={{ width: "100%", backgroundColor: "#000000" }}>
@@ -469,25 +406,8 @@ export default function App() {
             )}
             {formType == 7 && (
               <>
-                <Form onFinish={onFormFinishDispatch} layout="inline">
-                  <Form.Item
-                    label="ID"
-                    name="id"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input the rover commands!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                  <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                      Generate Command
-                    </Button>
-                  </Form.Item>
-                </Form>
+                <FormPopup7 onFormFinish={onFormFinishDispatch}></FormPopup7>
+
                 {commandDetails ? (
                   <>
                     <div style={{ width: "100%", backgroundColor: "#000000" }}>
