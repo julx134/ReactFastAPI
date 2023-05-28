@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import TerminalScreen from "./components/TerminalScreen";
 import { Col, Row, Card, Button, Modal, Space, Form, Input } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { FormPopup1 } from "./components/FormPopup";
+import { FormPopup1, FormPopup2, FormPopup3 } from "./components/FormPopup";
 
 export default function App() {
   const [command, setCommand] = useState("");
@@ -157,19 +157,7 @@ export default function App() {
             )}
             {formType == 2 && (
               <>
-                <Form onFinish={onFormFinishMap} layout="inline">
-                  <Form.Item label="Row" name="row">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item label="Col" name="col">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item style={{ marginTop: "2%" }}>
-                    <Button type="primary" htmlType="submit">
-                      Generate Command
-                    </Button>
-                  </Form.Item>
-                </Form>
+                <FormPopup2 onFormFinish={onFormFinishMap}></FormPopup2>
                 {commandDetails ? (
                   <>
                     <div style={{ width: "100%", backgroundColor: "#000000" }}>
@@ -217,36 +205,7 @@ export default function App() {
             )}
             {formType == 3 && (
               <>
-                <Form onFinish={onFormFinishPutMine}>
-                  <Form.Item
-                    label="ID"
-                    name="id"
-                    style={{ marginBottom: "2%" }}
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input the ID!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-
-                  <Form.Item label="x" name="x">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item label="y" name="y">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item label="Serial Number" name="serial_no">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item style={{ marginTop: "2%" }}>
-                    <Button type="primary" htmlType="submit">
-                      Generate Command
-                    </Button>
-                  </Form.Item>
-                </Form>
+                <FormPopup3 onFormFinish={onFormFinishPutMine}></FormPopup3>
                 {commandDetails ? (
                   <>
                     <div style={{ width: "100%", backgroundColor: "#000000" }}>

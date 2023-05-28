@@ -27,5 +27,61 @@ function FormPopup1({ onFormFinish }) {
   );
 }
 
-export { FormPopup1 };
-export default FormPopup1;
+function FormPopup2({ onFormFinish }) {
+  return (
+    <>
+      <Form onFinish={onFormFinish} layout="inline">
+        <Form.Item label="Row" name="row">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Col" name="col">
+          <Input />
+        </Form.Item>
+        <Form.Item style={{ marginTop: "2%" }}>
+          <Button type="primary" htmlType="submit">
+            Generate Command
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
+  );
+}
+
+function FormPopup3({ onFormFinish }) {
+  return (
+    <>
+      <Form onFinish={onFormFinish}>
+        <Form.Item
+          label="ID"
+          name="id"
+          style={{ marginBottom: "2%" }}
+          rules={[
+            {
+              required: true,
+              message: "Please input the ID!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item label="x" name="x">
+          <Input />
+        </Form.Item>
+        <Form.Item label="y" name="y">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Serial Number" name="serial_no">
+          <Input />
+        </Form.Item>
+        <Form.Item style={{ marginTop: "2%" }}>
+          <Button type="primary" htmlType="submit">
+            Generate Command
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
+  );
+}
+
+export { FormPopup1, FormPopup2, FormPopup3 };
