@@ -1,7 +1,7 @@
 import { Form, Input, Button } from "antd";
 import React from "react";
 
-export default function FormPopup({ onFormFinish }) {
+function FormPopup1({ onFormFinish }) {
   return (
     <>
       <Form onFinish={onFormFinish} layout="inline">
@@ -26,3 +26,6 @@ export default function FormPopup({ onFormFinish }) {
     </>
   );
 }
+
+export { FormPopup1 };
+export default FormPopup1;

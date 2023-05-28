@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import TerminalScreen from "./components/TerminalScreen";
 import { Col, Row, Card, Button, Modal, Space, Form, Input } from "antd";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import FormPopup from "./components/FormPopup";
+import { FormPopup1 } from "./components/FormPopup";
 
 export default function App() {
   const [command, setCommand] = useState("");
@@ -109,27 +109,7 @@ export default function App() {
           <>
             {formType == 1 && (
               <>
-                {/* <Form onFinish={onFormFinishID} layout="inline">
-                  <Form.Item
-                    label="ID"
-                    name="id"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input the rover commands!",
-                      },
-                    ]}
-                  >
-                    <Input />
-                  </Form.Item>
-                  <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                      Generate Command
-                    </Button>
-                  </Form.Item>
-                </Form> */}
-
-                <FormPopup onFormFinish={onFormFinishID}></FormPopup>
+                <FormPopup1 onFormFinish={onFormFinishID}></FormPopup1>
                 {commandDetails ? (
                   <>
                     <div style={{ width: "100%", backgroundColor: "#000000" }}>
