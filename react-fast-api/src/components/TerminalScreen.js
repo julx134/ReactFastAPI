@@ -109,9 +109,7 @@ export default function TerminalScreen({ writeCommand, writeResult }) {
             let body = "";
             try {
               body = commandArguments.split(" ")[1];
-            } catch (err) {
-              console.log(err);
-            }
+            } catch (err) {}
 
             let [errFlag, result] = await fetchData(command, endpoint, body);
 
